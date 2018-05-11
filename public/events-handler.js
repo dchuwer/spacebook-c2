@@ -11,18 +11,26 @@ class EventsHandler {
             if ($input.val() === "") {
                 alert("Please enter text!"); 
             } else {
-                this.postsRepository.addPost($input.val());
-                this.postsRenderer.renderPosts(this.postsRepository.posts);
-                $input.val("");
+                var newPost = this.postsRepository.addPost($input.val());
+                newPost.then( () =>  {
+                    this.postsRenderer.renderPosts(this.postsRepository.posts);
+                    $input.val("");
+                })
+                
             }
             });        
     }
 
     registerRemovePost() {
         this.$posts.on('click', '.remove-post', (event) => {
-            let index = $(event.currentTarget).closest('.post').index();;
-            this.postsRepository.removePost(index);
-            this.postsRenderer.renderPosts(this.postsRepository.posts);
+            
+            let index = $(event.currentTarget).closest('.post').index();
+            
+            var delPost = this.postsRepository.removePost(index);
+            delPost.then( () => {
+                this.postsRenderer.renderPosts(this.postsRepository.posts);
+            })
+            
           });
 
     }
@@ -47,10 +55,14 @@ class EventsHandler {
             let postIndex = $(event.currentTarget).closest('.post').index();
             let newComment = { text: $comment.val(), user: $user.val() };
           
-            this.postsRepository.addComment(newComment, postIndex);
-            this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
-            $comment.val("");
-            $user.val("");
+            var resNewComment = this.postsRepository.addComment(newComment, postIndex);
+            resNewComment.then( () => {
+                this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
+                $comment.val("");
+                $user.val("");
+
+            })
+            
           });
 
     }
@@ -60,8 +72,12 @@ class EventsHandler {
             let $commentsList = $(event.currentTarget).closest('.post').find('.comments-list');
             let postIndex = $(event.currentTarget).closest('.post').index();
             let commentIndex = $(event.currentTarget).closest('.comment').index();
-            this.postsRepository.deleteComment(postIndex, commentIndex);
-            this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
+            var delComment = this.postsRepository.deleteComment(postIndex, commentIndex);
+            delComment.then( () => {
+                this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
+
+            })
+           
         });
     }
 }

@@ -6,20 +6,72 @@ class PostsRepository {
         this.posts = [];
     }
 
+    getPosts(){
+        return $.get('/posts')
+        .then(  (data) => {
+            this.posts =  data;
+            
+        })
+
+
+
+    }
+
     addPost(postText) {
-        this.posts.push({ text: postText, comments: [] });
+        
+        return $.post('/posts', {text: postText})
+        .then(  (data) => {
+            if (data.text == "Saved")
+               this.posts.push({ text: postText, comments: [], _id: data.id });
+            
+        })
+
     }
 
     removePost(index) {
-        this.posts.splice(index, 1);
+        
+        return $.ajax({
+            type: 'Delete',
+            url: '/delete/'+this.posts[index]._id
+          })
+          
+        .then(  (data) => {
+            if (data == "Deleted")
+              this.posts.splice(index, 1);
+             
+        })
+        
     }
     
     addComment(newComment, postIndex) {
-        this.posts[postIndex].comments.push(newComment);
+        
+        return $.post('/posts/'+this.posts[postIndex]._id +'/comments',newComment)
+        .then(  (data) => {
+            console.log(data)
+            if (data.text == "Updated"){
+                newComment._id = data.id
+                this.posts[postIndex].comments.push(newComment);
+                
+            }
+        })
+        
     };
 
     deleteComment(postIndex, commentIndex) {
-        this.posts[postIndex].comments.splice(commentIndex, 1);
+        
+        return $.ajax({
+            type: 'Delete',
+            url: '/posts/del-comment/'+this.posts[postIndex]._id +"/"+this.posts[postIndex].comments[commentIndex]._id
+          })
+       
+        .then(  (data) => {
+            if (data == "Deleted"){
+                this.posts[postIndex].comments.splice(commentIndex, 1);
+                return
+            }
+        })
+
+        
       };
 }
 

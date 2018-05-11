@@ -11,3 +11,8 @@ eventsHandler.registerRemovePost();
 eventsHandler.registerToggleComments();
 eventsHandler.registerAddComment();
 eventsHandler.registerRemoveComment();
+
+var getPosts = postsRepository.getPosts();
+getPosts.then( () => {
+    
+    postsRenderer.renderPosts(postsRepository.posts)});
