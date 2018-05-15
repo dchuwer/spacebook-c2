@@ -71,8 +71,29 @@ class PostsRepository {
             }
         })
 
-        
+                
       };
+
+    uploadPhoto(form) {
+
+       
+            
+           // var title = $('#title').val(); 
+            //console.log(form)
+            return $(form).ajaxSubmit({
+              data: {title: "photo"},
+              contentType: 'application/json',
+              
+              success: function(response){
+                console.log('image uploaded and form submitted');     
+              },
+              error:function(res, err){
+                  console.error(err);
+              }
+          });
+            return false;
+        
+    }
 }
 
 export default PostsRepository

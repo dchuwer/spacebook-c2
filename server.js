@@ -1,6 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var multer = require('multer');
+//var upload = multer();
+
 
 const SERVER_PORT = 8080;
 
@@ -33,9 +36,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
      app.get('/posts',function (req, res){
           
-          
+          //console.log('passei')
           Post.find(function (req, posts){
-            
+          //  console.log(posts)
             res.send(posts);
 
           })
@@ -132,6 +135,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
               res.send("Deleted")
             })
         });
+
+
+//Function used to configure the middleware storage
+var storage = multer.diskStorage({
+  destination: function(req, file, callback){
+      callback(null, './public/uploads'); // set the destination
+  },
+  filename: function(req, file, callback){
+      
+      callback(null, Date.now() + '.jpg'); // set the file name and extension
+  }
+});
+var upload = multer({storage: storage});
+
+app.post('/upload', upload.single('imagename'), function(req, res, next) {
+  console.log("updating photo ////")
+  
+  var image = req.file.filename;
+ /** rest */ 
+});
 
 
 

@@ -3,6 +3,7 @@
 
 <head>
     <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    
     <link href="style.css" rel="stylesheet">
     <title></title>
 </head>
@@ -34,7 +35,12 @@
                 <input class="form-control name" type="text" placeholder="Name" />
                 <input class="form-control comment" type="text" placeholder="Comment" />
                 <button type="button" class="btn btn-sm btn-primary add-comment">Post Comment</button>
+                
             </div>
+            <form class="formPhoto" enctype="multipart/form-data" action="/upload" method="POST">
+                <input type="file" name="imagename" id="imagename"/>
+                <input type="submit" name="submit" value="submit">
+            </form>
         </div>
     </script>
     <script id="comment-template" type="text/x-handlebars-template">
@@ -44,7 +50,11 @@
         </li>
         
     </script>
+    
+        
+    
     <script src="jquery/dist/jquery.js"></script>
+    <script src="\@claviska\jquery-ajaxSubmit\jquery.ajaxSubmit.js"></script>
     <script src="handlebars/dist/handlebars.js"></script>
     <script src="main.js" type="module"></script>
 </body>

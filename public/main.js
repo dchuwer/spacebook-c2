@@ -11,6 +11,9 @@ eventsHandler.registerRemovePost();
 eventsHandler.registerToggleComments();
 eventsHandler.registerAddComment();
 eventsHandler.registerRemoveComment();
+eventsHandler.upPhoto();
+
+
 
 var getPosts = postsRepository.getPosts();
 getPosts.then( () => {

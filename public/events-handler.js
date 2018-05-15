@@ -80,6 +80,35 @@ class EventsHandler {
            
         });
     }
+
+    upPhoto() {
+        $('.formPhoto').submit(function(e){
+            e.preventDefault();
+            this.postsRepository.uploadPhoto($post)
+            // var $post= $(event.currentTarget).closest('.formPhoto');
+            // return $(form).ajaxSubmit({
+            //     data: {title: "photo"},
+            //     contentType: 'application/json',
+                
+            //     success: function(response){
+            //       console.log('image uploaded and form submitted');     
+            //     },
+            //     error:function(res, err){
+            //         console.error(err);
+            //     }
+            // });
+            //   return false;
+          
+      }
+          
+      //    var newPhoto = this.postsRepository.uploadPhoto($post)
+        //   newPhoto.then({
+              
+        //   })
+            
+               
+     
+    )}
 }
 
 export default EventsHandler

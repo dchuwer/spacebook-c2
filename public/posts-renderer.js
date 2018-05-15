@@ -10,6 +10,7 @@ class PostsRenderer {
 
     renderPosts(posts) {
         this.$posts.empty();
+        $('#formPhoto').css("diplay","block")
         let template = Handlebars.compile(this.$postTemplate);
         for (let i = 0; i < posts.length; i++) {
           let newHTML = template(posts[i]);
